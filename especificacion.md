@@ -61,4 +61,3 @@ La app está bien si:
 
 - Ruta: Streamlit Community Cloud.
 - Proyecto individual (sin equipo).
-""" 
