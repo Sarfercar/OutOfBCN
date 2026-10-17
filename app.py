@@ -29,7 +29,7 @@ with st.form("formulario_preferencias"):
     
     transporte = st.selectbox(
         "¿Cómo te vas a desplazar desde Barcelona?",
-        ['Coche propio / Alquiler', 'Tren (Renfe/FGC)', 'Autobús', 'Avión (Vuelo directo corto)']
+        ['Coche propio / Alquiler', 'Tren (Renfe/FGC)', 'Autobús', 'Avión (vuelo directo corto)']
     )
     
     buscar = st.form_submit_button("Buscar Recomendaciones 🤖", use_container_width=True)
@@ -40,7 +40,7 @@ if buscar:
         api_key = st.secrets["GEMINI_API_KEY"]
         client = genai.Client(api_key=api_key)
     except Exception:
-        st.error("🔑 Error: No se ha configurado la clave 'GEMINI_API_KEY' en los secretos de Streamlit (secrets.toml).")
+        st.error("🔑 Error: No se ha configurado la clave 'GEMINI_API_KEY' en los secretos de Streamlit.")
         st.stop()
 
     prompt_completo = f"""
@@ -68,7 +68,6 @@ if buscar:
             )
             
             texto_respuesta = response.text.strip()
-            # Limpiar etiquetas de código markdown si el modelo las incluye
             if texto_respuesta.startswith("```json"):
                 texto_respuesta = texto_respuesta[7:]
             if texto_respuesta.endswith("```"):
@@ -86,4 +85,5 @@ if buscar:
                     st.info(f"💡 **Consejo rápido:** {dest.get('consejo_rapido')}")
                 
         except Exception as e:
-            st.error(f"❌ Error técnico detallado: {e}")
+            # Mensaje amigable acorde a la especificación ante alta demanda o errores de servicio
+            st.warning("⚠️ El servicio de recomendaciones no está disponible temporalmente debido a una alta demanda. Por favor, inténtalo de nuevo en unos segundos.")
