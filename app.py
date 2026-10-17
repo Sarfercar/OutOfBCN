@@ -43,41 +43,39 @@ if buscar:
         st.error("🔑 Error: No se ha configurado la clave 'GEMINI_API_KEY' en los secretos de Streamlit (secrets.toml).")
         st.stop()
 
-    system_prompt = """
+    prompt_completo = f"""
     Eres un experto asesor de viajes enfocado en escapadas desde Barcelona. 
     Tu objetivo es proponer exactamente tres destinos que se adapten a la duración, presupuesto, transporte y ambiente seleccionados por el usuario. 
     Sé claro, directo y práctico. 
     
-    Para CADA uno de los 3 destinos, debes responder en un formato JSON estructurado como una lista de objetos. 
-    Cada objeto debe tener exactamente estas claves:
-    - "nombre": El nombre del destino.
-    - "porque_encaja": Breve explicación de por qué encaja con sus preferencias.
-    - "consejo_rapido": Un consejo práctico e indispensable sobre el lugar.
-    
-    No inventes disponibilidad de vuelos ni precios exactos.
-    Tu respuesta debe ser EXCLUSIVAMENTE el bloque de código JSON, sin textos de introducción o despedida.
-    """
-
-    user_prompt = f"""
-    Quiero una escapada con estas preferencias:
+    Preferencias del usuario:
     - Duración: {dias}
     - Presupuesto aproximado: {presupuesto}
     - Ambiente deseado: {ambiente}
     - Medio de transporte desde Barcelona: {transporte}
+
+    IMPORTANTE: Devuelve la respuesta ÚNICAMENTE en formato JSON válido (una lista de 3 objetos), sin texto adicional antes ni después ni bloques de markdown adicionales. Cada objeto debe tener exactamente estas claves:
+    - "nombre": El nombre del destino.
+    - "porque_encaja": Breve explicación de por qué encaja con sus preferencias.
+    - "consejo_rapido": Un consejo práctico e indispensable sobre el lugar.
     """
 
     with st.spinner("Consultando con nuestro asesor de IA..."):
         try:
             response = client.models.generate_content(
                 model='gemini-3.8-flash',
-                contents=user_prompt,
-                config={
-                    'system_instruction': system_prompt,
-                    'response_mime_type': 'application/json'
-                }
+                contents=prompt_completo
             )
             
-            destinos = json.loads(response.text.strip())
+            texto_respuesta = response.text.strip()
+            # Limpiar etiquetas de código markdown si el modelo las incluye
+            if texto_respuesta.startswith("```json"):
+                texto_respuesta = texto_respuesta[7:]
+            if texto_respuesta.endswith("```"):
+                texto_respuesta = texto_respuesta[:-3]
+            texto_respuesta = texto_respuesta.strip()
+            
+            destinos = json.loads(texto_respuesta)
             
             st.success("¡Aquí tienes tus propuestas de escapada!")
             
