@@ -69,7 +69,7 @@ if buscar:
     with st.spinner("Consultando con nuestro asesor de IA..."):
         try:
             response = client.models.generate_content(
-                model='gemini-2.5-flash',
+                model='gemini-3.8-flash',
                 contents=user_prompt,
                 config={
                     'system_instruction': system_prompt,
