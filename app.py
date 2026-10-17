@@ -87,5 +87,5 @@ if buscar:
                     st.write(f"**¿Por qué encaja?** {dest.get('porque_encaja')}")
                     st.info(f"💡 **Consejo rápido:** {dest.get('consejo_rapido')}")
                 
-        except Exception as e:
-            st.error(f"¡Ups! Ha ocurrido un error al generar las recomendaciones. Por favor, inténtalo de nuevo en unos minutos.")
+except Exception as e:
+            st.error(f"❌ Error técnico detallado: {e}")
