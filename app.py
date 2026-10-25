@@ -62,10 +62,10 @@ if buscar:
 
     with st.spinner("Consultando con nuestro asesor de IA..."):
         try:
-            response = client.models.generate_content(
-                model='gemini-3.8-flash',
-                contents=prompt_completo
-            )
+response = client.models.generate_content(
+    model='gemini-2.5-flash',  # <-- Usa este modelo oficial
+    contents=prompt_completo,
+)
             
             texto_respuesta = response.text.strip()
             if texto_respuesta.startswith("```json"):
