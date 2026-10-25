@@ -39,9 +39,9 @@ if buscar:
     try:
         api_key = st.secrets["GEMINI_API_KEY"]
         client = genai.Client(api_key=api_key)
-    except Exception:
-        st.error("🔑 Error: No se ha configurado la clave 'GEMINI_API_KEY' en los secretos de Streamlit.")
-        st.stop()
+except Exception as e:
+            # Mostramos el error exacto para saber qué falla
+            st.error(f"❌ Error detallado: {e}")
 
     prompt_completo = f"""
     Eres un experto asesor de viajes enfocado en escapadas desde Barcelona. 
