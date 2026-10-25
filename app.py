@@ -35,13 +35,13 @@ with st.form("formulario_preferencias"):
     buscar = st.form_submit_button("Buscar Recomendaciones 🤖", use_container_width=True)
 
 if buscar:
-    # Intentar obtener la API KEY desde st.secrets
+    # Intentar obtener la API KEY desde st.secrets de forma segura
     try:
         api_key = st.secrets["GEMINI_API_KEY"]
         client = genai.Client(api_key=api_key)
-except Exception as e:
-            # Mostramos el error exacto para saber qué falla
-            st.error(f"❌ Error detallado: {e}")
+    except Exception as e:
+        st.error(f"🔑 Error al configurar la clave de API en los secretos: {e}")
+        st.stop()
 
     prompt_completo = f"""
     Eres un experto asesor de viajes enfocado en escapadas desde Barcelona. 
@@ -85,4 +85,4 @@ except Exception as e:
                     st.info(f"💡 **Consejo rápido:** {dest.get('consejo_rapido')}")
                 
         except Exception as e:
-            st.warning("⚠️ El servicio de recomendaciones no está disponible temporalmente debido a una alta demanda. Por favor, inténtalo de nuevo en unos segundos.")
+            st.error(f"❌ Error detallado en la llamada a la IA: {e}")
