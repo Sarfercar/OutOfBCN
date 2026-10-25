@@ -62,10 +62,10 @@ if buscar:
 
     with st.spinner("Consultando con nuestro asesor de IA..."):
         try:
-response = client.models.generate_content(
-    model='gemini-2.5-flash',  # <-- Usa este modelo oficial
-    contents=prompt_completo,
-)
+            response = client.models.generate_content(
+                model='gemini-2.5-flash',
+                contents=prompt_completo
+            )
             
             texto_respuesta = response.text.strip()
             if texto_respuesta.startswith("```json"):
@@ -85,5 +85,4 @@ response = client.models.generate_content(
                     st.info(f"💡 **Consejo rápido:** {dest.get('consejo_rapido')}")
                 
         except Exception as e:
-            # Mensaje amigable acorde a la especificación ante alta demanda o errores de servicio
             st.warning("⚠️ El servicio de recomendaciones no está disponible temporalmente debido a una alta demanda. Por favor, inténtalo de nuevo en unos segundos.")
