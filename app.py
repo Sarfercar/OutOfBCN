@@ -1,6 +1,5 @@
 import streamlit as st
 import json
-import time
 from google import genai
 
 # Configuración de la página
@@ -61,47 +60,30 @@ if buscar:
     - "consejo_rapido": Un consejo práctico e indispensable sobre el lugar.
     """
 
-    with st.spinner("Consultando con nuestro asesor de IA (los servidores están con alta demanda)..."):
-        exito = False
-        intentos = 3
-        response = None
-        
-        for intento in range(intentos):
-            try:
-                response = client.models.generate_content(
-                    model='gemini-3.8-flash',
-                    contents=prompt_completo
-                )
-                exito = True
-                break
-            except Exception as e:
-                if "503" in str(e) or "UNAVAILABLE" in str(e):
-                    if intento < intentos - 1:
-                        time.sleep(2) # Espera 2 segundos antes de reintentar
-                        continue
-                # Si es otro error o se agotan los intentos, relanzamos la excepción
-                raise e
-
-        if exito and response:
-            try:
-                texto_respuesta = response.text.strip()
-                if texto_respuesta.startswith("```json"):
-                    texto_respuesta = texto_respuesta[7:]
-                if texto_respuesta.endswith("```"):
-                    texto_respuesta = texto_respuesta[:-3]
-                texto_respuesta = texto_respuesta.strip()
+    with st.spinner("Consultando con nuestro asesor de IA..."):
+        try:
+            response = client.models.generate_content(
+                model='gemini-3.8-flash',
+                contents=prompt_completo
+            )
+            
+            texto_respuesta = response.text.strip()
+            if texto_respuesta.startswith("```json"):
+                texto_respuesta = texto_respuesta[7:]
+            if texto_respuesta.endswith("```"):
+                texto_respuesta = texto_respuesta[:-3]
+            texto_respuesta = texto_respuesta.strip()
+            
+            destinos = json.loads(texto_respuesta)
+            
+            st.success("¡Aquí tienes tus propuestas de escapada!")
+            
+            for i, dest in enumerate(destinos, 1):
+                with st.container(border=True):
+                    st.subheader(f"📍 Opción {i}: {dest.get('nombre')}")
+                    st.write(f"**¿Por qué encaja?** {dest.get('porque_encaja')}")
+                    st.info(f"💡 **Consejo rápido:** {dest.get('consejo_rapido')}")
                 
-                destinos = json.loads(texto_respuesta)
-                
-                st.success("¡Aquí tienes tus propuestas de escapada!")
-                
-                for i, dest in enumerate(destinos, 1):
-                    with st.container(border=True):
-                        st.subheader(f"📍 Opción {i}: {dest.get('nombre')}")
-                        st.write(f"**¿Por qué encaja?** {dest.get('porque_encaja')}")
-                        st.info(f"💡 **Consejo rápido:** {dest.get('consejo_rapido')}")
-                        
-            except Exception as parse_error:
-                st.error(f"❌ Error procesando la respuesta de la IA: {parse_error}")
-        else:
-            st.warning("⚠️ El servicio de recomendaciones está experimentando una alta demanda temporal. Por favor, pulsa de nuevo en unos segundos.")
+        except Exception as e:
+            # Si hay saturación (503) u otro error, te lo muestra claramente al instante
+            st.warning("⚠️ El servicio de recomendaciones está experimentando una alta demanda en este momento (Error 503). Por favor, espera unos segundos y vuelve a pulsar el botón.")
