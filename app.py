@@ -62,8 +62,9 @@ if buscar:
 
     with st.spinner("Consultando con nuestro asesor de IA..."):
         try:
+            # Usamos el modelo que exige tu clave de API
             response = client.models.generate_content(
-                model='gemini-2.5-flash',
+                model='gemini-3.8-flash',
                 contents=prompt_completo
             )
             
