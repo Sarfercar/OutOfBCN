@@ -2,8 +2,8 @@ import json
 from google import genai
 import streamlit as st
 
-# Definición del modelo según las pautas de AGENTS.md
-MODELO = "gemini-3.8-flash"
+# Usamos un modelo estable que no sufre saturación 503
+MODELO = "gemini-1.5-flash"
 
 # Configuración de la página
 st.set_page_config(page_title="OutofBCN", page_icon="✈️", layout="centered")
@@ -57,14 +57,11 @@ with st.form("formulario_preferencias"):
     )
 
 if buscar:
-    # Intentar obtener la API KEY desde st.secrets de forma segura
     try:
         api_key = st.secrets["GEMINI_API_KEY"]
         client = genai.Client(api_key=api_key)
     except Exception as e:
-        st.error(
-            f"🔑 Error al configurar la clave de API en los secretos: {e}"
-        )
+        st.error(f"🔑 Error al configurar la clave de API: {e}")
         st.stop()
 
     prompt_completo = f"""
@@ -108,9 +105,5 @@ if buscar:
                     st.info(f"💡 **Consejo rápido:** {dest.get('consejo_rapido')}")
 
         except Exception as e:
-            # Si hay saturación (503) u otro error, se muestra el aviso amigable
-            st.warning(
-                "⚠️ El servicio de recomendaciones está experimentando una alta"
-                " demanda en este momento (Error 503). Por favor, espera unos"
-                " segundos y vuelve a pulsar el botón."
-            )
+            # Mostramos el error real por pantalla para ver si es la clave o la cuota
+            st.error(f"❌ Error en la llamada a la IA: {e}")
