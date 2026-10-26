@@ -1,10 +1,10 @@
 import json
-import time
+import random
 from google import genai
 import streamlit as st
 
-# Usamos el alias genérico más estable para evitar saturaciones 503
-MODELO = "gemini-flash-latest"
+# Definición del modelo oficial según AGENTS.md
+MODELO = "gemini-3.8-flash"
 
 # Configuración de la página
 st.set_page_config(page_title="OutofBCN", page_icon="✈️", layout="centered")
@@ -82,6 +82,8 @@ if buscar:
     - "consejo_rapido": Un consejo práctico e indispensable sobre el lugar.
     """
 
+    destinos = None
+
     with st.spinner("Consultando con nuestro asesor de IA..."):
         try:
             response = client.models.generate_content(
@@ -97,17 +99,64 @@ if buscar:
 
             destinos = json.loads(texto_respuesta)
 
-            st.success("¡Aquí tienes tus propuestas de escapada!")
-
-            for i, dest in enumerate(destinos, 1):
-                with st.container(border=True):
-                    st.subheader(f"📍 Opción {i}: {dest.get('nombre')}")
-                    st.write(
-                        f"**¿Por qué encaja?** {dest.get('porque_encaja')}"
-                    )
-                    st.info(
-                        f"💡 **Consejo rápido:** {dest.get('consejo_rapido')}"
-                    )
-
         except Exception as e:
-            st.error(f"❌ Error en la llamada a la IA: {e}")
+            # Si Google devuelve el error 503 por saturación, activamos el respaldo inteligente
+            if "503" in str(e) or "UNAVAILABLE" in str(e):
+                st.toast(
+                    "⚠️ Los servidores de IA están saturados (503). Activando"
+                    " modo de respaldo local...",
+                    icon="💡",
+                )
+                destinos = [
+                    {
+                        "nombre": "Sitges (Costa del Garraf)",
+                        "porque_encaja": (
+                            f"Ideal para tu selección de {dias} y"
+                            f" desplazamiento en {transporte}, ofreciendo un"
+                            f" ambiente de {ambiente} a un paso de Barcelona."
+                        ),
+                        "consejo_rapido": (
+                            "Pasea por el casco antiguo y visita la"
+                            " emblemática Iglesia de San Bartolomé y Santa"
+                            " Tecla al atardecer."
+                        ),
+                    },
+                    {
+                        "nombre": "Montserrat (Parque Natural)",
+                        "porque_encaja": (
+                            f"Se alinea perfectamente con un perfil de"
+                            f" presupuesto {presupuesto} y transporte en"
+                            f" {transporte}, combinando naturaleza y"
+                            " espiritualidad."
+                        ),
+                        "consejo_rapido": (
+                            "Sube temprano en el tren cremallera para evitar"
+                            " aglomeraciones y disfrutar de las mejores"
+                            " vistas panorámicas."
+                        ),
+                    },
+                    {
+                        "nombre": "Vic (Osona)",
+                        "porque_encaja": (
+                            "Perfecto para una escapada cultural y"
+                            " gastronómica accesible, cumpliendo con las"
+                            " expectativas de tu viaje."
+                        ),
+                        "consejo_rapido": (
+                            "No te pierdas la Plaza Mayor porticada y prueba"
+                            " los embutidos artesanales tradicionales de la"
+                            " comarca."
+                        ),
+                    },
+                ]
+            else:
+                st.error(f"❌ Error en la llamada a la IA: {e}")
+
+    if destinos:
+        st.success("¡Aquí tienes tus propuestas de escapada!")
+
+        for i, dest in enumerate(destinos, 1):
+            with st.container(border=True):
+                st.subheader(f"📍 Opción {i}: {dest.get('nombre')}")
+                st.write(f"**¿Por qué encaja?** {dest.get('porque_encaja')}")
+                st.info(f"💡 **Consejo rápido:** {dest.get('consejo_rapido')}")
