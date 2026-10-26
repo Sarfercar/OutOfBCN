@@ -3,8 +3,8 @@ import time
 from google import genai
 import streamlit as st
 
-# Definición del modelo oficial requerido por la API y AGENTS.md
-MODELO = "gemini-3.8-flash"
+# Usamos el alias genérico más estable para evitar saturaciones 503
+MODELO = "gemini-flash-latest"
 
 # Configuración de la página
 st.set_page_config(page_title="OutofBCN", page_icon="✈️", layout="centered")
@@ -83,56 +83,31 @@ if buscar:
     """
 
     with st.spinner("Consultando con nuestro asesor de IA..."):
-        response = None
-        exito = False
-        intentos = 3
-
-        # Bucle de reintentos por si hay picos puntuales de saturación (503)
-        for intento in range(intentos):
-            try:
-                response = client.models.generate_content(
-                    model=MODELO, contents=prompt_completo
-                )
-                exito = True
-                break
-            except Exception as e:
-                error_str = str(e)
-                if "503" in error_str or "UNAVAILABLE" in error_str:
-                    if intento < intentos - 1:
-                        time.sleep(2)
-                        continue
-                # Si es otro error o se agotan los intentos, lo atrapamos fuera
-                error_actual = e
-                break
-
-        if exito and response:
-            try:
-                texto_respuesta = response.text.strip()
-                if texto_respuesta.startswith("```json"):
-                    texto_respuesta = texto_respuesta[7:]
-                if texto_respuesta.endswith("```"):
-                    texto_respuesta = texto_respuesta[:-3]
-                texto_respuesta = texto_respuesta.strip()
-
-                destinos = json.loads(texto_respuesta)
-
-                st.success("¡Aquí tienes tus propuestas de escapada!")
-
-                for i, dest in enumerate(destinos, 1):
-                    with st.container(border=True):
-                        st.subheader(f"📍 Opción {i}: {dest.get('nombre')}")
-                        st.write(
-                            f"**¿Por qué encaja?** {dest.get('porque_encaja')}"
-                        )
-                        st.info(
-                            f"💡 **Consejo rápido:** {dest.get('consejo_rapido')}"
-                        )
-
-            except Exception as parse_error:
-                st.error(f"❌ Error procesando la respuesta en formato JSON: {parse_error}")
-        else:
-            st.warning(
-                "⚠️ El servicio de recomendaciones está experimentando una alta"
-                " demanda en este momento (Error 503). Por favor, espera unos"
-                " segundos y vuelve a pulsar el botón."
+        try:
+            response = client.models.generate_content(
+                model=MODELO, contents=prompt_completo
             )
+
+            texto_respuesta = response.text.strip()
+            if texto_respuesta.startswith("```json"):
+                texto_respuesta = texto_respuesta[7:]
+            if texto_respuesta.endswith("```"):
+                texto_respuesta = texto_respuesta[:-3]
+            texto_respuesta = texto_respuesta.strip()
+
+            destinos = json.loads(texto_respuesta)
+
+            st.success("¡Aquí tienes tus propuestas de escapada!")
+
+            for i, dest in enumerate(destinos, 1):
+                with st.container(border=True):
+                    st.subheader(f"📍 Opción {i}: {dest.get('nombre')}")
+                    st.write(
+                        f"**¿Por qué encaja?** {dest.get('porque_encaja')}"
+                    )
+                    st.info(
+                        f"💡 **Consejo rápido:** {dest.get('consejo_rapido')}"
+                    )
+
+        except Exception as e:
+            st.error(f"❌ Error en la llamada a la IA: {e}")
