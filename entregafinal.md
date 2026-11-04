@@ -6,7 +6,7 @@
 
 - **App principal desplegada:** [https://outofbcn.streamlit.app/](https://outofbcn.streamlit.app/)
 - **Repositorio principal:** [https://github.com/Sarfercar/OutOfBCN](https://github.com/Sarfercar/OutOfBCN)
-- **App extra de desarrollo (Volotea Destination Finder):** [https://v7quiz.streamlit.app/](https://v7quiz.streamlit.app/) (Aplicación profesional auxiliar desarrollada con los conocimientos del máster para la red de rutas de Volotea. Incorpora un catálogo optimizado en formato CSV delimitado por punto y coma `(;)` con metadatos, códigos IATA y etiquetas de interés, procesado eficientemente en Streamlit mediante **Pandas**. Repositorio asociado: [https://github.com/Sarfercar/v7quiz](https://github.com/Sarfercar/v7quiz)).
+- **App extra de desarrollo (Volotea Destination Finder):** [https://v7quiz.streamlit.app/](https://v7quiz.streamlit.app/) (Aplicación auxiliar desarrollada con los conocimientos del máster para la red de rutas de Volotea. Incorpora un catálogo optimizado en formato CSV delimitado por punto y coma `(;)` con metadatos, códigos IATA y etiquetas de interés, procesado eficientemente en Streamlit mediante **Pandas**. Repositorio asociado: [https://github.com/Sarfercar/v7quiz](https://github.com/Sarfercar/v7quiz)).
 
 ---
 
