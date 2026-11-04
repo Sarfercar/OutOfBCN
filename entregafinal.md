@@ -59,4 +59,30 @@ Puedes consultar la especificación completa en el repositorio o revisar su resu
 | Quién la probó | Qué probó | Qué pasó | Qué cambié |
 |---|---|---|---|
 | Yo como usuaria | Peticiones continuadas a la API de Gemini desde la interfaz de Streamlit | La app se quedaba congelada indefinidamente en el spinner *"Consultando con nuestro asesor de IA..."* al saltar errores de cuota o saturación que no estaban cubiertos por el filtro estricto de excepciones. | Modifiqué el bloque `except` para capturar de forma universal cualquier fallo de la API y programé un sistema de respaldo local (*fallback*) con `st.toast` y destinos predeterminados para garantizar una experiencia fluida. |
-| Yo como usuaria | Integración de destinos comerciales en app auxiliar (`v7quiz`) | Para la herramienta de Volotea se necesitaba un filtrado estructurado que relacionase aeropuertos (IATA), duraciones y temporadas sin depender al 100% de
+| Yo como usuaria | Integración de destinos comerciales en app auxiliar (`v7quiz`) | Para la herramienta de Volotea se necesitaba un filtrado estructurado que relacionase aeropuertos (IATA), duraciones y temporadas sin depender al 100% de llamadas abiertas al LLM. | Creé un archivo CSV delimitado por punto y coma (`;`) con campos como `country`, `destination`, `iata`, `interests`, `trip_length`, `seasons`, `budget_tier` y `description` para procesar y filtrar rápidamente las rutas con Pandas. |
+| Compañero de clase | Introducción de parámetros extremos de presupuesto bajo y trayectos largos | El modelo sugería destinos geográficamente inviables o demasiado costosos para el transporte seleccionado. | Refiné el *system prompt* limitando estrictamente las recomendaciones a opciones alcanzables de manera realista desde Barcelona. |
+
+---
+
+## 7. Pitch escrito
+
+1. Muchas personas que viven en Barcelona quieren hacer una escapada de fin de semana, pero pierden horas navegando entre recomendaciones dispersas sin saber qué encaja con su tiempo y presupuesto.
+2. OutofBCN resuelve esta parálisis por análisis ofreciendo en segundos tres propuestas de destino personalizadas desde la capital catalana a través de un sencillo formulario web.
+3. La IA actúa como un asesor experto que razona sobre criterios cualitativos como el ambiente o el tipo de transporte, algo que una consulta estática en bases de datos tradicionales no conseguiría.
+4. Tras probar la app en producción, descubrí lo crítica que es la gestión de errores ante caídas de la API, lo que me llevó a implementar un sistema de respaldo automático que evita bloqueos en la interfaz.
+5. Si continuara el proyecto, añadiría filtros avanzados para actividades específicas e integración en tiempo real con horarios de transporte público (como Rodalies o FGC), respaldado por datos de uso de usuarios reales.
+
+---
+
+## 8. Capturas
+
+*(Inserta aquí tus capturas de pantalla asegurándote de que no se vea ninguna clave de API en ninguna de ellas)*
+
+1. **La app funcionando** en su caso principal (formulario de preferencias y resultados generados).
+   ![La app funcionando](https://github.com/user-attachments/assets/3030aca0-99ca-4e27-bd01-806b84865b9c)
+2. **La app ante un caso límite o un error** (aviso de respaldo local activado ante saturación o fallo de la API).
+   *[Inserta aquí tu captura del error / aviso de respaldo]*
+3. **Vuestro trabajo con la IA** (momento de la conversación con el asistente mostrando el prompt de manejo de errores o generación JSON).
+   *[Inserta aquí tu captura trabajando con la IA]*
+4. **La prueba** (captura de la interfaz respondiendo al caso de prueba o la interacción en el foro del hito).
+   *[Inserta aquí tu captura de la prueba]*
