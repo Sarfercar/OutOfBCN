@@ -1,4 +1,4 @@
-# Entrega final · OutofBCN
+<img width="875" height="877" alt="image" src="https://github.com/user-attachments/assets/abd835ca-7c10-4cc8-b3f0-2b53b2ed05b1" /># Entrega final · OutofBCN
 
 **Nombre y apellidos:** Sara Fernández Carmona
 
@@ -76,13 +76,18 @@ Puedes consultar la especificación completa en el repositorio o revisar su resu
 
 ## 8. Capturas
 
-*(Inserta aquí tus capturas de pantalla asegurándote de que no se vea ninguna clave de API en ninguna de ellas)*
+1. **La app funcionando en su caso principal:** Formulario de preferencias completado e interfaz respondiendo correctamente.
+   <br>
+   <img width="650" alt="La app funcionando" src="https://github.com/user-attachments/assets/3030aca0-99ca-4e27-bd01-806b84865b9c" />
 
-1. **La app funcionando** en su caso principal (formulario de preferencias y resultados generados).
-   ![La app funcionando](https://github.com/user-attachments/assets/3030aca0-99ca-4e27-bd01-806b84865b9c)
-2. **La app ante un caso límite o un error** (aviso de respaldo local activado ante saturación o fallo de la API).
-   *[Inserta aquí tu captura del error / aviso de respaldo]*
-3. **Vuestro trabajo con la IA** (momento de la conversación con el asistente mostrando el prompt de manejo de errores o generación JSON).
-   *[Inserta aquí tu captura trabajando con la IA]*
-4. **La prueba** (captura de la interfaz respondiendo al caso de prueba o la interacción en el foro del hito).
-   *[Inserta aquí tu captura de la prueba]*
+2. **La app ante un caso límite o error:** Aviso flotante amigable (`st.toast`) activando el modo de respaldo local ante la saturación de la API.
+   <br>
+   <img width="650" alt="Aviso de respaldo local ante error" src="https://github.com/user-attachments/assets/d2465900-f80c-4375-8889-f74e55e5d3c1" />
+
+3. **Trabajo con la IA (Prompting y depuración):** Conversación con el asistente para definir la lógica del prompt y la captura de excepciones universal.
+   <br>
+   <img width="650" alt="Trabajo con la IA - Prompting" src="https://github.com/user-attachments/assets/84442512-68ce-4dc4-868c-c95e5c0377fe" />
+
+4. **Prueba y validación:** Interacción y revisión de la lógica de respuesta ante casos límite y estructura de datos.
+   <br>
+   <img width="650" alt="Prueba de la app" src="https://github.com/user-attachments/assets/fa426ee4-a149-4801-9b23-da8bd4cbf2dc" />
