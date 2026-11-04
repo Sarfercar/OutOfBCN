@@ -26,7 +26,7 @@ Quienes residen en Barcelona y buscan improvisar un viaje corto suelen consultar
 ## Cómo la he construido
 
 - **Herramientas:** Gemini CLI, Google Colab y VS Code.
-- **Fichero de contexto del agente:** [AGENTS.md](./AGENTS.md)
+- **Fichero de contexto del agente:** [./AGENTS.md](https://github.com/Sarfercar/OutOfBCN/blob/main/agents.md))
 - **Prompts clave:**
   1. *Prompt de especificación inicial:* "Ayúdame a redactar la especificación técnica para una app en Streamlit que recomiende 3 escapadas desde Barcelona según tiempo, presupuesto, transporte y ambiente."
   2. *Prompt de generación del JSON:* `"Eres un experto asesor de viajes enfocado en escapadas desde Barcelona. Tu objetivo es proponer exactamente tres destinos que se adapten a la duración, presupuesto, transporte y ambiente seleccionados por el usuario. IMPORTANTE: Devuelve la respuesta ÚNICAMENTE en formato JSON válido (una lista de 3 objetos)..."`
