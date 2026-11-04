@@ -1,4 +1,4 @@
-<img width="875" height="877" alt="image" src="https://github.com/user-attachments/assets/abd835ca-7c10-4cc8-b3f0-2b53b2ed05b1" /># Entrega final · OutofBCN
+# Entrega final · OutofBCN
 
 **Nombre y apellidos:** Sara Fernández Carmona
 
