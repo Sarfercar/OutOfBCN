@@ -41,6 +41,12 @@ Quienes residen en Barcelona y buscan improvisar un viaje corto suelen consultar
 | Yo como usuaria | Invocación de la API con el SDK | El modelo a veces devolvía el código JSON envuelto en bloques de markdown (````json ... ````), lo que hacía fallar el parseo con `json.loads()`. | Añadí una lógica de limpieza de string (`strip()` y remoción de etiquetas de markdown) antes de convertir la respuesta a un objeto JSON. |
 | Compañero de clase | Introducción de criterios extremos (presupuesto muy bajo y viaje largo) | La app generaba destinos demasiado lejanos que no encajaban bien con el presupuesto indicado. | Refiné el *system prompt* exigiendo que las opciones fueran alcanzables de forma estrictamente realista desde Barcelona según el transporte elegido. |
 
+## Capturas
+
+<p align="center">
+  <img width="641" height="908" alt="Captura de OutofBCN" src="https://github.com/user-attachments/assets/3030aca0-99ca-4e27-bd01-806b84865b9c">
+</p>
+
 ## Ejecutar en local (opcional)
 
 ```bash
