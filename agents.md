@@ -29,5 +29,5 @@ Aplicación para proponer tres destinos de escapada personalizados saliendo desd
 
 ## Qué no hacer
 - No borres ni reescribas el README sin preguntar.
-- Não cambies el modelo ni la arquitectura sin preguntar.
+- No cambies el modelo ni la arquitectura sin preguntar.
 - No hagas push ni despliegues sin que yo lo haya revisado.
