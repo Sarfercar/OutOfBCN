@@ -46,13 +46,3 @@ Quienes residen en Barcelona y buscan improvisar un viaje corto suelen consultar
 <p align="center">
   <img width="641" height="908" alt="Captura de OutofBCN" src="https://github.com/user-attachments/assets/3030aca0-99ca-4e27-bd01-806b84865b9c">
 </p>
-
-## Ejecutar en local (opcional)
-
-```bash
-pip install -r requirements.txt
-
-# Configurar la clave en .streamlit/secrets.toml:
-# GEMINI_API_KEY="tu_api_key_aqui"
-
-streamlit run app.py
