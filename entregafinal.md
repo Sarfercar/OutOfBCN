@@ -86,8 +86,8 @@ Puedes consultar la especificación completa en el repositorio o revisar su resu
 
 3. **Trabajo con la IA (Prompting y depuración):** Conversación con el asistente para definir la lógica del prompt y la captura de excepciones universal.
    <br>
-   <img width="650" alt="Trabajo con la IA - Prompting" src="https://github.com/user-attachments/assets/84442512-68ce-4dc4-868c-c95e5c0377fe" />
+   <img width="650" alt="Trabajo con la IA - Prompting" src="https://github.com/user-attachments/assets/dd4df7a1-56d3-4f0e-8ac0-3bb107490090" />
 
-4. **Prueba y validación:** Interacción y revisión de la lógica de respuesta ante casos límite y estructura de datos.
+4. **Prueba y validación (Solución implementada):** Fragmento de código resultante en Python con el bloque `except` y el respaldo local para evitar el bloqueo de la app.
    <br>
    <img width="650" alt="Prueba de la app" src="https://github.com/user-attachments/assets/fa426ee4-a149-4801-9b23-da8bd4cbf2dc" />
