@@ -100,57 +100,51 @@ if buscar:
             destinos = json.loads(texto_respuesta)
 
         except Exception as e:
-            # Si Google devuelve el error 503 por saturación, activamos el respaldo inteligente
-            if "503" in str(e) or "UNAVAILABLE" in str(e):
-                st.toast(
-                    "⚠️ Los servidores de IA están saturados (503). Activando"
-                    " modo de respaldo local...",
-                    icon="💡",
-                )
-                destinos = [
-                    {
-                        "nombre": "Sitges (Costa del Garraf)",
-                        "porque_encaja": (
-                            f"Ideal para tu selección de {dias} y"
-                            f" desplazamiento en {transporte}, ofreciendo un"
-                            f" ambiente de {ambiente} a un paso de Barcelona."
-                        ),
-                        "consejo_rapido": (
-                            "Pasea por el casco antiguo y visita la"
-                            " emblemática Iglesia de San Bartolomé y Santa"
-                            " Tecla al atardecer."
-                        ),
-                    },
-                    {
-                        "nombre": "Montserrat (Parque Natural)",
-                        "porque_encaja": (
-                            f"Se alinea perfectamente con un perfil de"
-                            f" presupuesto {presupuesto} y transporte en"
-                            f" {transporte}, combinando naturaleza y"
-                            " espiritualidad."
-                        ),
-                        "consejo_rapido": (
-                            "Sube temprano en el tren cremallera para evitar"
-                            " aglomeraciones y disfrutar de las mejores"
-                            " vistas panorámicas."
-                        ),
-                    },
-                    {
-                        "nombre": "Vic (Osona)",
-                        "porque_encaja": (
-                            "Perfecto para una escapada cultural y"
-                            " gastronómica accesible, cumpliendo con las"
-                            " expectativas de tu viaje."
-                        ),
-                        "consejo_rapido": (
-                            "No te pierdas la Plaza Mayor porticada y prueba"
-                            " los embutidos artesanales tradicionales de la"
-                            " comarca."
-                        ),
-                    },
-                ]
-            else:
-                st.error(f"❌ Error en la llamada a la IA: {e}")
+            # Ante cualquier fallo (429 de cuota, 503 de saturación, etc.),
+            # activamos el respaldo local para evitar que la app se quede bloqueada.
+            st.toast(
+                "⚠️ La API de IA no está disponible temporalmente. Activando"
+                " modo de respaldo local...",
+                icon="💡",
+            )
+            destinos = [
+                {
+                    "nombre": "Sitges (Costa del Garraf)",
+                    "porque_encaja": (
+                        f"Ideal para tu selección de {dias} y desplazamiento en"
+                        f" {transporte}, ofreciendo un ambiente de {ambiente} a"
+                        " un paso de Barcelona."
+                    ),
+                    "consejo_rapido": (
+                        "Pasea por el casco antiguo y visita la emblemática"
+                        " Iglesia de San Bartolomé y Santa Tecla al atardecer."
+                    ),
+                },
+                {
+                    "nombre": "Montserrat (Parque Natural)",
+                    "porque_encaja": (
+                        f"Se alinea perfectamente con un perfil de presupuesto"
+                        f" {presupuesto} y transporte en {transporte},"
+                        " combinando naturaleza y espiritualidad."
+                    ),
+                    "consejo_rapido": (
+                        "Sube temprano en el tren cremallera para evitar"
+                        " aglomeraciones y disfrutar de las mejores vistas"
+                        " panorámicas."
+                    ),
+                },
+                {
+                    "nombre": "Vic (Osona)",
+                    "porque_encaja": (
+                        "Perfecto para una escapada cultural y gastronómica"
+                        " accesible, cumpliendo con las expectativas de tu viaje."
+                    ),
+                    "consejo_rapido": (
+                        "No te pierdas la Plaza Mayor porticada y prueba los"
+                        " embutidos artesanales tradicionales de la comarca."
+                    ),
+                },
+            ]
 
     if destinos:
         st.success("¡Aquí tienes tus propuestas de escapada!")
