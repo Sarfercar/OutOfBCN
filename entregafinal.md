@@ -1,4 +1,4 @@
-# Entrega final · OutofBCN
+# Entrega final · OutofBCN ✈️🚗
 
 **Nombre y apellidos:** Sara Fernández Carmona
 
